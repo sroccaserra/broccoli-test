@@ -1,4 +1,4 @@
-Quick test to setup [Broccoli][b] and [6to5][s] with RequireJS.
+Quick test to use [Broccoli][b] and [6to5][s] with RequireJS.
 
     $ npm install
     $ bower install
