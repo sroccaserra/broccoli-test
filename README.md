@@ -43,7 +43,7 @@ Then pass the resulting tree to 6to5:
 ```javascript
 var transpiled = sixToFiveTranspiler(app, {modules: 'amd'});
 ```
-Also, create a tree for `app/vendor` (bower installed libs, RequireJS in this example):
+Also, create a tree for `app/vendor` (bower-installed libs - RequireJS in this example):
 ```javascript
 var libs = staticCompiler('app', {srcDir: '/vendor', destDir: '/vendor'})
 ```
