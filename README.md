@@ -2,12 +2,12 @@ Quick test to use [Broccoli][b] and [6to5][s] with RequireJS.
 
 See `Brocfile.js`, and the ES6 code using ES6 modules in `app`.
 
-## Install Deps
+### Install Deps
 
     $ npm install
     $ bower install
 
-## Run
+### Run
 
     $ broccoli serve
 
