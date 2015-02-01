@@ -10,15 +10,19 @@ The actual code does very little, it's just here to show that the glue is workin
 
 In `javascript/index.js`, I use the ES6 module syntax (at last, a JavaScript module standard for the browser!) :
 
-    import inc from './tools';
+```javascript
+import inc from './tools';
 
-    console.log(inc(3));
+console.log(inc(3));
+```
 
 In `javascript/tools.js`, I define the `inc` function imported above using the ES6 arrow notation, and export it :
 
+```javascript
     var inc = x => x + 1;
 
     export default inc;
+```
 
 Then, Broccoli + 6to5 + RequireJS makes this code run in the browser.
 
