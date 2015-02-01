@@ -4,6 +4,8 @@ The ES6 code using ES6 modules in `app/javascript` is transpiled to ES5, and ES6
 
 See `Brocfile.js` for details about the setup.
 
+## Small explanation
+
 ### What it does
 
 The actual code does very little, it's just here to show that the glue is working.
@@ -26,7 +28,45 @@ In `javascript/tools.js`, I define the `inc` function imported above using the E
 
 Then, Broccoli + 6to5 + RequireJS makes this code run in the browser.
 
+### How it does it
+
+It's all in `Brocfile.js`.
+
+Tell Broccoli to exclude the `app/vendor` path (that's where bower puts its stuff, I don't want to transpile them):
+
+```javascript
+var app = fileRemover('app', {path: '/vendor'});
+```
+
+Then pass the resulting tree to 6to5:
+
+```javascript
+var transpiled = sixToFiveTranspiler(app, {modules: 'amd'});
+```
+Also, create a tree for `app/vendor` (bower installed libs, RequireJS in this example):
+```javascript
+var libs = staticCompiler('app', {srcDir: '/vendor', destDir: '/vendor'})
+```
+
+Then merge the two trees, and return it to Broccoli.
+```javascript
+module.exports = mergeTrees([transpiled, libs]);
+```
+
+That's it, Broccoli takes care of the file system for you.
+
+Note that Broccoli will watch your files, and update the served content at light speed (see the Broccoli [introductory blog post][i] for details).
+
+## Install & run
+
 ### Install Deps
+
+If you haven't already:
+
+    $ npm install -g broccoli
+    $ npm install -g bower
+
+Then:
 
     $ npm install
     $ bower install
@@ -34,8 +74,6 @@ Then, Broccoli + 6to5 + RequireJS makes this code run in the browser.
 ### Run
 
     $ broccoli serve
-
-Note that Broccoli will watch your files, and update the served content at light speed (see the Broccoli [introductory blog post][i] for details).
 
 
 [b]: https://github.com/broccolijs/broccoli
