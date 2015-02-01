@@ -1,4 +1,4 @@
-Quick test to use [Broccoli][b] and [6to5][s] with [RequireJS][r].
+Quick test to use ES6 code in browsers today, with [Broccoli][b] + [6to5][s] + [RequireJS][r].
 
 The ES6 code using ES6 modules in `app/javascript` is transpiled to ES5, and ES6 modules are converted to AMD modules by 6to5. After that, add RequireJS and the resulting code can run in any decent browser.
 
