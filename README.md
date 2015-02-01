@@ -4,6 +4,24 @@ The ES6 code using ES6 modules in `app/javascript` is transpiled to ES5, and ES6
 
 See `Brocfile.js` for details about the setup.
 
+### What it does
+
+The actual code does very little, it's just here to show that the glue is working.
+
+In `javascript/index.js`, I use the ES6 module syntax (at last, a JavaScript module standard for the browser!) :
+
+    import inc from './tools';
+
+    console.log(inc(3));
+
+In `javascript/tools.js`, I define the `inc` function imported above using the ES6 arrow notation, and export it :
+
+    var inc = x => x + 1;
+
+    export default inc;
+
+Then, Broccoli + 6to5 + RequireJS makes this code run in the browser.
+
 ### Install Deps
 
     $ npm install
