@@ -8,7 +8,7 @@ See `Brocfile.js` for details about the setup.
 
 The actual code does very little, it's just here to show that the glue is working.
 
-In `javascript/index.js`, I use the ES6 module syntax (at last, a JavaScript module standard for the browser!) :
+In `javascript/index.js`, I use the [ES6 module syntax][m] to import a function from `javascript/tools.js`, and use it (at last, a JavaScript module standard for the browser!) :
 
 ```javascript
 import inc from './tools';
@@ -40,4 +40,5 @@ Note that Broccoli will watch your files, and update the served content at light
 
 [b]: https://github.com/broccolijs/broccoli
 [i]: http://www.solitr.com/blog/2014/02/broccoli-first-release/
+[m]: http://www.2ality.com/2014/09/es6-modules-final.html
 [s]: http://6to5.org
