@@ -76,7 +76,7 @@ light speed (see the Broccoli [introductory blog post][i] for details).
 
 If you haven't already:
 
-    $ npm install -g broccoli
+    $ npm install -g broccoli-cli
     $ npm install -g bower
 
 Then:
