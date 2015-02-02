@@ -1,3 +1,3 @@
-var inc = x => x + 1;
+var getStatus = () => "working!";
 
-export default inc;
+export default getStatus;

@@ -1,6 +1,9 @@
-Quick test to use ES6 code in browsers today, with [Broccoli][b] + [6to5][s] + [RequireJS][r].
+Quick test to use ES6 code in browsers today, with [Broccoli][b] + [6to5][s] +
+[RequireJS][r].
 
-The ES6 code using ES6 modules in `app/javascript` is transpiled to ES5, and ES6 modules are converted to AMD modules by 6to5. After that, add RequireJS and the resulting code can run in any decent browser.
+The ES6 code using ES6 modules in `app/javascript` is transpiled to ES5, and
+ES6 modules are converted to AMD modules by 6to5. After that, add RequireJS and
+the resulting code can run in any decent browser.
 
 See `Brocfile.js` for details about the setup.
 
@@ -10,20 +13,24 @@ See `Brocfile.js` for details about the setup.
 
 The actual code does very little, it's just here to show that the glue is working.
 
-In `javascript/index.js`, I use the [ES6 module syntax][m] to import a function from `javascript/tools.js`, and use it (at last, a JavaScript module standard for the browser!) :
+In `javascript/index.js`, I use the [ES6 module syntax][m] to import a function
+from `javascript/tools.js`, and use it to update a span in the document:
 
 ```javascript
-import inc from './tools';
+import getStatus from './tools';
 
-console.log(inc(3));
+document.getElementById('es6Status').innerHTML = getStatus();
 ```
 
-In `javascript/tools.js`, I define the `inc` function imported above using the ES6 arrow notation, and export it :
+Note: at last, a JavaScript module standard for the browser!
+
+And in `javascript/tools.js`, I define the `getStatus()` function imported
+above using the ES6 arrow notation, and export it:
 
 ```javascript
-    var inc = x => x + 1;
+var getStatus = () => "working!";
 
-    export default inc;
+export default getStatus;
 ```
 
 Then, Broccoli + 6to5 + RequireJS makes this code run in the browser.
@@ -32,7 +39,8 @@ Then, Broccoli + 6to5 + RequireJS makes this code run in the browser.
 
 It's all in `Brocfile.js`.
 
-Tell Broccoli to create a tree from the `app` dir, excluding the `app/vendor` path (that's where bower puts its stuff, I don't want to transpile them):
+Tell Broccoli to create a tree from the `app` dir, excluding the `app/vendor`
+path (that's where bower puts its stuff, I don't want to transpile them):
 
 ```javascript
 var app = fileRemover('app', {path: '/vendor'});
@@ -43,19 +51,24 @@ Then pass the resulting tree to 6to5:
 ```javascript
 var transpiled = sixToFiveTranspiler(app, {modules: 'amd'});
 ```
-Also, create a tree for `app/vendor` (bower-installed libs - RequireJS in this example):
+
+Also, create a tree for `app/vendor` (bower-installed libs - RequireJS in this
+example):
+
 ```javascript
 var libs = staticCompiler('app', {srcDir: '/vendor', destDir: '/vendor'})
 ```
 
 Then merge the two trees, and return it to Broccoli.
+
 ```javascript
 module.exports = mergeTrees([transpiled, libs]);
 ```
 
 That's it, Broccoli takes care of the file system for you.
 
-Note that Broccoli will watch your files, and update the served content at light speed (see the Broccoli [introductory blog post][i] for details).
+Note that Broccoli will watch your files, and update the served content at
+light speed (see the Broccoli [introductory blog post][i] for details).
 
 ## Install & run
 
@@ -63,7 +76,7 @@ Note that Broccoli will watch your files, and update the served content at light
 
 If you haven't already:
 
-    $ npm install -g broccoli-cli
+    $ npm install -g broccoli
     $ npm install -g bower
 
 Then:

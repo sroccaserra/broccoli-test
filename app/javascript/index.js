@@ -1,3 +1,3 @@
-import inc from './tools';
+import getStatus from './tools';
 
-console.log(inc(3));
+document.getElementById('es6Status').innerHTML = getStatus();
