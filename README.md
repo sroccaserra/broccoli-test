@@ -63,7 +63,7 @@ Note that Broccoli will watch your files, and update the served content at light
 
 If you haven't already:
 
-    $ npm install -g broccoli
+    $ npm install -g broccoli-cli
     $ npm install -g bower
 
 Then:
