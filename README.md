@@ -39,11 +39,14 @@ Then, Broccoli + 6to5 + RequireJS makes this code run in the browser.
 
 It's all in `Brocfile.js`.
 
-Tell Broccoli to create a tree from the `app` dir, excluding the `app/vendor`
-path (that's where bower puts its stuff, I don't want to transpile them):
+Tell Broccoli to create a tree from the `app` dir:
 
 ```javascript
-var app = fileRemover('app', {path: '/vendor'});
+var app = staticCompiler('app', {
+    srcDir: '/',
+    files: ['**/*.js', '**/*.html'],
+    destDir: '/'
+});
 ```
 
 Then pass the resulting tree to 6to5:
@@ -52,17 +55,19 @@ Then pass the resulting tree to 6to5:
 var transpiled = sixToFiveTranspiler(app, {modules: 'amd'});
 ```
 
-Also, create a tree for `app/vendor` (bower-installed libs - RequireJS in this
-example):
+Also, create a tree from Bower components (RequireJS in this example):
 
 ```javascript
-var libs = staticCompiler('app', {srcDir: '/vendor', destDir: '/vendor'})
+var lib = staticCompiler('bower_components', {
+    srcDir: '/',
+    destDir: '/lib'
+});
 ```
 
 Then merge the two trees, and return it to Broccoli.
 
 ```javascript
-module.exports = mergeTrees([transpiled, libs]);
+module.exports = mergeTrees([transpiled, lib]);
 ```
 
 That's it, Broccoli takes care of the file system for you.
