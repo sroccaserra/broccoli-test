@@ -13,8 +13,7 @@ See `Brocfile.js` for details about the setup.
 
 The actual code does very little, it's just here to show that the glue is working.
 
-In `javascript/index.js`, I use the [ES6 module syntax][m] to import a function
-from `javascript/tools.js`, and use it to update a span in the document:
+In `javascript/index.js`, I use the [ES6 module syntax][m] to import `javascript/tools.js`, and use it to update a span in the document:
 
 ```javascript
 import * as tools from 'tools';
