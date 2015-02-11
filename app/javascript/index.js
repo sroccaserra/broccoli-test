@@ -1,3 +1,3 @@
-import getStatus from './tools';
+import * as tools from 'tools';
 
-document.getElementById('es6Status').innerHTML = getStatus();
+document.getElementById('es6Status').innerHTML = tools.getStatus();

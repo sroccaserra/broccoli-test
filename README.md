@@ -17,9 +17,9 @@ In `javascript/index.js`, I use the [ES6 module syntax][m] to import a function
 from `javascript/tools.js`, and use it to update a span in the document:
 
 ```javascript
-import getStatus from './tools';
+import * as tools from 'tools';
 
-document.getElementById('es6Status').innerHTML = getStatus();
+document.getElementById('es6Status').innerHTML = tools.getStatus();
 ```
 
 Note: at last, a JavaScript module standard for the browser!
@@ -28,9 +28,7 @@ And in `javascript/tools.js`, I define the `getStatus()` function imported
 above using the ES6 arrow notation, and export it:
 
 ```javascript
-var getStatus = () => "working!";
-
-export default getStatus;
+export var getStatus = () => "working!";
 ```
 
 Then, Broccoli + 6to5 + RequireJS makes this code run in the browser.

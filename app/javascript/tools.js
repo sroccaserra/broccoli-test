@@ -1,3 +1,1 @@
-var getStatus = () => "working!";
-
-export default getStatus;
+export var getStatus = () => "working!";
