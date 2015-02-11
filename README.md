@@ -1,9 +1,9 @@
 Quick test to use ES6 code in browsers today, with [Broccoli][b] + [6to5][s] +
-[RequireJS][r].
+[Browserify][r].
 
 The ES6 code using ES6 modules in `app/javascript` is transpiled to ES5, and
-ES6 modules are converted to AMD modules by 6to5. After that, add RequireJS and
-the resulting code can run in any decent browser.
+ES6 modules are converted to CommonJS modules by 6to5. Pass the result to
+Browserify and the resulting code can run in any decent browser.
 
 See `Brocfile.js` for details about the setup.
 
@@ -13,7 +13,8 @@ See `Brocfile.js` for details about the setup.
 
 The actual code does very little, it's just here to show that the glue is working.
 
-In `javascript/index.js`, I use the [ES6 module syntax][m] to import `javascript/tools.js`, and use it to update a span in the document:
+In `javascript/index.js`, I use the [ES6 module syntax][m] to import
+`javascript/tools.js`, and use it to update a span in the document:
 
 ```javascript
 import * as tools from 'tools';
@@ -30,41 +31,52 @@ above using the ES6 arrow notation, and export it:
 export var getStatus = () => "working!";
 ```
 
-Then, Broccoli + 6to5 + RequireJS makes this code run in the browser.
+Then, Broccoli + 6to5 + Browserify makes this code run in the browser.
 
 ### How it does it
 
 It's all in `Brocfile.js`.
 
-Tell Broccoli to create a tree from the `app` dir:
+Tell Broccoli to create a tree from the ES6 JavaScript sources:
 
 ```javascript
-var app = staticCompiler('app', {
-    srcDir: '/',
-    files: ['**/*.js', '**/*.html'],
-    destDir: '/'
+var jsSrc = staticCompiler('app', {
+    srcDir: '/javascript',
+    files: ['**/*.js'],
+    destDir: '/javascript'
 });
 ```
 
 Then pass the resulting tree to 6to5:
 
 ```javascript
-var transpiled = sixToFiveTranspiler(app, {modules: 'amd'});
+var transpiled = sixToFiveTranspiler(jsSrc);
 ```
 
-Also, create a tree from Bower components (RequireJS in this example):
+Now `transpiled` is a tree containing ES5 code using CommonJS modules. We just
+need to pass it through Browserify:
 
 ```javascript
-var lib = staticCompiler('bower_components', {
+var browserified = browserify(transpiled, {entries: ['./javascript/index.js']});
+```
+
+This will generate a `browserify.js` bundle file containing ES5 code working in
+most browsers.
+
+Also, create a tree from HTML sources:
+
+```javascript
+var htmlSrc = staticCompiler('app', {
     srcDir: '/',
-    destDir: '/lib'
+    files: ['**/*.html'],
+    destDir: '/'
 });
 ```
 
-Then merge the two trees, and return it to Broccoli.
+Then merge the browserified and HTML trees, and export the result to Broccoli.
 
 ```javascript
-module.exports = mergeTrees([transpiled, lib]);
+module.exports = mergeTrees([browserified, htmlSrc]);
 ```
 
 That's it, Broccoli takes care of the file system for you.
@@ -79,12 +91,10 @@ light speed (see the Broccoli [introductory blog post][i] for details).
 If you haven't already:
 
     $ npm install -g broccoli-cli
-    $ npm install -g bower
 
 Then:
 
     $ npm install
-    $ bower install
 
 ### Run
 
@@ -94,5 +104,5 @@ Then:
 [b]: https://github.com/broccolijs/broccoli
 [i]: http://www.solitr.com/blog/2014/02/broccoli-first-release/
 [m]: http://www.2ality.com/2014/09/es6-modules-final.html
-[r]: http://requirejs.org/
+[r]: http://browserify.org/
 [s]: http://6to5.org
