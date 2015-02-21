@@ -50,7 +50,7 @@ var jsSrc = staticCompiler('app', {
 Then pass the resulting tree to Babel:
 
 ```javascript
-var transpiled = sixToFiveTranspiler(jsSrc);
+var transpiled = babelTranspiler(jsSrc);
 ```
 
 Now `transpiled` is a tree containing ES5 code using CommonJS modules. We just
