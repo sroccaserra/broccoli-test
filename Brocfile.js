@@ -1,5 +1,5 @@
 var staticCompiler = require('broccoli-static-compiler');
-var sixToFiveTranspiler = require('broccoli-6to5-transpiler');
+var babelTranspiler = require('broccoli-babel-transpiler');
 var browserify = require('broccoli-browserify');
 var mergeTrees = require('broccoli-merge-trees');
 
@@ -14,7 +14,7 @@ var htmlSrc = staticCompiler('app', {
     destDir: '/'
 });
 
-var transpiled = sixToFiveTranspiler(jsSrc);
+var transpiled = babelTranspiler(jsSrc);
 var browserified = browserify(transpiled, {entries: ['./javascript/index.js']});
 
 module.exports = mergeTrees([browserified, htmlSrc]);

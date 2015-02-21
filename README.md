@@ -1,8 +1,8 @@
-Quick test to use ES6 code in browsers today, with [Broccoli][b] + [6to5][s] +
+Quick test to use ES6 code in browsers today, with [Broccoli][b] + [Babel][s] +
 [Browserify][r].
 
 The ES6 code using ES6 modules in `app/javascript` is transpiled to ES5, and
-ES6 modules are converted to CommonJS modules by 6to5. Pass the result to
+ES6 modules are converted to CommonJS modules by Babel. Pass the result to
 Browserify and the resulting code can run in any decent browser.
 
 See `Brocfile.js` for details about the setup.
@@ -31,7 +31,7 @@ above using the ES6 arrow notation, and export it:
 export var getStatus = () => "working!";
 ```
 
-Then, Broccoli + 6to5 + Browserify makes this code run in the browser.
+Then, Broccoli + Babel + Browserify makes this code run in the browser.
 
 ### How it does it
 
@@ -47,7 +47,7 @@ var jsSrc = staticCompiler('app', {
 });
 ```
 
-Then pass the resulting tree to 6to5:
+Then pass the resulting tree to Babel:
 
 ```javascript
 var transpiled = sixToFiveTranspiler(jsSrc);
@@ -105,4 +105,4 @@ Then:
 [i]: http://www.solitr.com/blog/2014/02/broccoli-first-release/
 [m]: http://www.2ality.com/2014/09/es6-modules-final.html
 [r]: http://browserify.org/
-[s]: http://6to5.org
+[s]: http://babeljs.io

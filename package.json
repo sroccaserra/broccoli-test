@@ -12,7 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "broccoli": "^0.13.3",
-    "broccoli-6to5-transpiler": "^3.0.0",
+    "broccoli-babel-transpiler": "^4.0.0",
     "broccoli-browserify": "^0.1.0",
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-static-compiler": "^0.2.1"
