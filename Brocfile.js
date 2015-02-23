@@ -3,18 +3,18 @@ var babelTranspiler = require('broccoli-babel-transpiler');
 var browserify = require('broccoli-browserify');
 var mergeTrees = require('broccoli-merge-trees');
 
-var jsSrc = staticCompiler('app', {
+var es6Tree = staticCompiler('app', {
     srcDir: '/javascript',
     files: ['**/*.js'],
     destDir: '/javascript'
 });
-var htmlSrc = staticCompiler('app', {
+var htmlTree = staticCompiler('app', {
     srcDir: '/',
     files: ['**/*.html'],
     destDir: '/'
 });
 
-var transpiled = babelTranspiler(jsSrc);
-var browserified = browserify(transpiled, {entries: ['./javascript/index.js']});
+var es5Tree = babelTranspiler(es6Tree);
+var browserifiedTree = browserify(es5Tree, {entries: ['./javascript/index.js']});
 
-module.exports = mergeTrees([browserified, htmlSrc]);
+module.exports = mergeTrees([browserifiedTree, htmlTree]);

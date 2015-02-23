@@ -40,7 +40,7 @@ It's all in `Brocfile.js`.
 Tell Broccoli to create a tree from the ES6 JavaScript sources:
 
 ```javascript
-var jsSrc = staticCompiler('app', {
+var es6Tree = staticCompiler('app', {
     srcDir: '/javascript',
     files: ['**/*.js'],
     destDir: '/javascript'
@@ -50,14 +50,14 @@ var jsSrc = staticCompiler('app', {
 Then pass the resulting tree to Babel:
 
 ```javascript
-var transpiled = babelTranspiler(jsSrc);
+var es5Tree = babelTranspiler(es6Tree);
 ```
 
-Now `transpiled` is a tree containing ES5 code using CommonJS modules. We just
+Now `es5Tree` is a tree containing ES5 code using CommonJS modules. We just
 need to pass it through Browserify:
 
 ```javascript
-var browserified = browserify(transpiled, {entries: ['./javascript/index.js']});
+var browserifiedTree = browserify(es5Tree, {entries: ['./javascript/index.js']});
 ```
 
 This will generate a `browserify.js` bundle file containing ES5 code working in
@@ -66,7 +66,7 @@ most browsers.
 Also, create a tree from HTML sources:
 
 ```javascript
-var htmlSrc = staticCompiler('app', {
+var htmlTree = staticCompiler('app', {
     srcDir: '/',
     files: ['**/*.html'],
     destDir: '/'
@@ -76,7 +76,7 @@ var htmlSrc = staticCompiler('app', {
 Then merge the browserified and HTML trees, and export the result to Broccoli.
 
 ```javascript
-module.exports = mergeTrees([browserified, htmlSrc]);
+module.exports = mergeTrees([browserifiedTree, htmlTree]);
 ```
 
 That's it, Broccoli takes care of the file system for you.
